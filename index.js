@@ -25,3 +25,8 @@ console.log(owners);
 console.log(owners.owners.length, 'owners total.');
 
 /// Find out how many tokens each holders have.
+
+// use alchemy or web3.js to check how many tokens each address on the step before have. 
+
+// then do everything with web3.eth.defaultBlock
+// READ -- https://web3js.readthedocs.io/en/v1.7.3/web3-eth.html#defaultblock
