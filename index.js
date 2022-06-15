@@ -21,10 +21,12 @@ console.log('fetching owners...')
 
 const ownersResponse = await fetch(fetchURL, requestOptions);
 const owners = await ownersResponse.json();
+
 console.log(owners);
-console.log(owners.owners.length, 'owners total.');
+console.log(`>> Total owners: ${owners.owners.length}`);
 
 /// Find out how many tokens each holders have.
+// use web3 alchemy
 
 // use alchemy or web3.js to check how many tokens each address on the step before have. 
 
