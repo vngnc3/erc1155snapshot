@@ -9,7 +9,7 @@ const web3 = createAlchemyWeb3(
   `https://eth-mainnet.alchemyapi.io/nft/v2/${ALCHEMY_KEY}`,
 );
 
-const ownerAddr = "0x226bbbba1572b200a3de470b3d94a5c470e9a6a5";
+const ownerAddr = "0x37b7458c5f14822bf423965aed077a20269011c5";
 
 console.log('fetching data...');
 const nftSet = await web3.alchemy.getNfts({owner: ownerAddr});
@@ -19,9 +19,9 @@ const nftSet = await web3.alchemy.getNfts({owner: ownerAddr});
 // const contractAddr = nftSet.ownedNfts[0].contract.address;
 
 // define the filter
-const incompleteContract = '0x6a46B8591679f53AE1AEd3Bae673F4D2208f7177'; // incomplete design
+const incompleteContract = '0x6a46B8591679f53AE1AEd3Bae673F4D2208f7177';
 
-// return nft objects for a incomplete contract address
+// return nft objects for a incomplete design contract address
 const filteredNfts = nftSet.ownedNfts.filter(function filter(nft) {
     return nft.contract.address == incompleteContract.toLowerCase();
 });
