@@ -10,6 +10,7 @@
 /// ███████████████████████████████████████████████ Made in Jakarta ██
 
 
+// TODO -- Write pushedOwnerData into CSV as well as the existing JSON-parsed output. 
 // TODO -- Filter out a set of address against the snapshot JSON, removing Incomplete Design airdrop recipients.
 // WARN -- Alchemy NFT API IGNORES web3.eth.defaultBlock
 // NEXT -- Do everything but with web3.eth.defaultBlock
@@ -27,7 +28,7 @@ import fs from 'fs';
 const ALCHEMY_KEY = process.env.ALCHEMY_KEY;                            // Read key from .env file
 const FILE_OUTPUT = 'temp.json';                                        // Define file output path.
 const CONTRACT_ADDRESS = '0x6a46B8591679f53AE1AEd3Bae673F4D2208f7177';  // using Incomplete Design
-const TOKEN_ID = 1;                                                     // Set tokenID
+const TOKEN_ID = 4;                                                     // Set tokenID
 
 
 /// ███ Write and verify function ███████████████████████████████████
@@ -109,6 +110,7 @@ async function pushBalance(item) {
         if (newOwnerSet.length == ownersJSON.owners.length) {
             console.log(`✅ ${newOwnerSet.length} holders pushed! Writing data...`);
             writeToFile(newOwnerSet);
+            console.log(newOwnerSet); // log to console for testing
         };
     }
     catch(error) {
