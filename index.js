@@ -1,19 +1,18 @@
 /// ███ ERC-1155 SNAPSHOT TOOL ██████████████████████████████████████
 
-/// ██ Fetch, count, and organize owners of semi-fungible tokens.█
+/// ██ Fetch, count, and organize owners of semi-fungible token. █
 /// ██ Usage: Define Alchemy API key in .env file                █
 /// ██        Set file output, contract address, and tokenID.    █
 
 /// ██ This tool is unable to snapshot a previous block, due to  █
 /// ██ limitations in Alchemy's NFT API. Use at your own risk.   █
 
-/// ███████████████████████████████████████████████ Made in Jakarta ██
+/// ███████████████████████████████████████████████████████████████████
 
 
-// TODO -- Write pushedOwnerData into CSV as well as the existing JSON-parsed output. 
 // TODO -- Filter out a set of address against the snapshot JSON, removing Incomplete Design airdrop recipients.
-// WARN -- Alchemy NFT API IGNORES web3.eth.defaultBlock
-// NEXT -- Do everything but with web3.eth.defaultBlock
+// WARN -- Alchemy NFT API doesn't use web3.eth.defaultBlock
+// NEXT -- Do all of these but with web3.eth.defaultBlock
 // READ -- https://web3js.readthedocs.io/en/v1.7.3/web3-eth.html#defaultblock
 
 
@@ -25,21 +24,38 @@ import fs from 'fs';
 
 
 /// ███ Configure the snapshot ██████████████████████████████████████
-const ALCHEMY_KEY = process.env.ALCHEMY_KEY;                            // Read key from .env file
-const FILE_OUTPUT = 'temp.json';                                        // Define file output path.
-const CONTRACT_ADDRESS = '0x6a46B8591679f53AE1AEd3Bae673F4D2208f7177';  // using Incomplete Design
-const TOKEN_ID = 4;                                                     // Set tokenID
+// Read key from .env file
+const ALCHEMY_KEY = process.env.ALCHEMY_KEY;
+// Define output filename
+const FILE_OUTPUT = 'snapshot';
+// Accepts ERC-1155 contract
+const CONTRACT_ADDRESS = '0x6a46b8591679f53ae1aed3bae673f4d2208f7177';
+// Select the tokenID
+const TOKEN_ID = 1;
 
 
 /// ███ Write and verify function ███████████████████████████████████
+let csv = `address,balanceOf ${TOKEN_ID}`;
 async function writeToFile(pushedOwnerData) {
-    const fileName = FILE_OUTPUT.split('.')[0];
-    const output = `${fileName}_${CONTRACT_ADDRESS.slice(0, 6)}_at_${currentBlock}.json`;
-    fs.writeFileSync(output, (JSON.stringify(pushedOwnerData, null, 4)));
-    const exportedJSON = JSON.parse(fs.readFileSync(output));
+    const fileName = FILE_OUTPUT;
+    const output = `${fileName}_${CONTRACT_ADDRESS.slice(0, 6)}_at_${currentBlock}`;
+    // JSON export
+    fs.writeFileSync(`${output}.json`, (JSON.stringify(pushedOwnerData, null, 4)));
+    const exportedJSON = JSON.parse(fs.readFileSync(`${output}.json`));
     console.log(`${(newOwnerSet.length === ownersJSON.owners.length) ? (`✅ ownerSet length verified (${newOwnerSet.length})`) : (`🛑 ownerSet length mismatch!!!`)}`);
     console.log(`${(exportedJSON.length === ownersJSON.owners.length) ? (`✅ exported owners length verified (${newOwnerSet.length})`) : (`🛑 exported owners length mismatch!!!`)}`);
-    console.log(`🌈 data saved successfully to ${output} 🌈`);
+    // CSV export, if and only if exported JSON is verified.
+    if (exportedJSON.length === ownersJSON.owners.length) {
+        pushedOwnerData.forEach(csvStringify);
+        fs.writeFileSync(`${output}.csv`, csv);
+    } else {
+        console.log(`🛑 exported owners length mismatch!!! CSV export aborted.`);
+    };
+    console.log(`🌈 data saved successfully to ${output}.json and ${output}.csv 🌈`);
+};
+
+async function csvStringify(object){
+    csv += `\n${object.address},${object.balance}`;
 };
 
 
@@ -59,7 +75,6 @@ let currentBlock = await web3.eth.getBlockNumber();
 
 
 /// ███ Fetch owners for a token ████████████████████████████████████
-/// !!! WARN: Alchemy NFT API IGNORES web3.eth.defaultBlock !!!
 let requestOptions = {
     method: 'GET',
     redirect: 'follow'
@@ -110,7 +125,6 @@ async function pushBalance(item) {
         if (newOwnerSet.length == ownersJSON.owners.length) {
             console.log(`✅ ${newOwnerSet.length} holders pushed! Writing data...`);
             writeToFile(newOwnerSet);
-            console.log(newOwnerSet); // log to console for testing
         };
     }
     catch(error) {

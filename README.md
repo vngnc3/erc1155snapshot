@@ -1,5 +1,5 @@
 # ERC1155 Snapshot Tool
-### 📸 Snapshot ERC1155 token owners with balance. 
+### 📸 Snapshot a single ERC1155 token owners with balance. 
 
 ---  
 
