@@ -27,18 +27,20 @@ import fs from 'fs';
 // Read key from .env file
 const ALCHEMY_KEY = process.env.ALCHEMY_KEY;
 // Define output filename
-const FILE_OUTPUT = 'snapshot';
+const FILE_OUTPUT = 'snap';
 // Accepts ERC-1155 contract
-const CONTRACT_ADDRESS = '0x6a46b8591679f53ae1aed3bae673f4d2208f7177';
+const CONTRACT_ADDRESS = '0x7b426a60ce72643fdf11556ee1d0da3c0a041ed8';
 // Select the tokenID
-const TOKEN_ID = 1;
+const TOKEN_ID = 2;
+// Set the delay between requests in ms.
+const DELAY = 360;
 
 
 /// ███ Write and verify function ███████████████████████████████████
 let csv = `address,balanceOf ${TOKEN_ID}`;
 async function writeToFile(pushedOwnerData) {
     const fileName = FILE_OUTPUT;
-    const output = `${fileName}_${CONTRACT_ADDRESS.slice(0, 6)}_at_${currentBlock}`;
+    const output = `${fileName}_${CONTRACT_ADDRESS.slice(0, 8)}_at_${currentBlock}`;
     // JSON export
     fs.writeFileSync(`${output}.json`, (JSON.stringify(pushedOwnerData, null, 4)));
     const exportedJSON = JSON.parse(fs.readFileSync(`${output}.json`));
@@ -51,7 +53,7 @@ async function writeToFile(pushedOwnerData) {
     } else {
         console.log(`🛑 exported owners length mismatch!!! CSV export aborted.`);
     };
-    console.log(`🌈 data saved successfully to ${output}.json and ${output}.csv 🌈`);
+    console.log(`🌈 data saved successfully to ${output}.json and ${output}.csv🌈`);
 };
 
 async function csvStringify(object){
@@ -125,15 +127,26 @@ async function pushBalance(item) {
         if (newOwnerSet.length == ownersJSON.owners.length) {
             console.log(`✅ ${newOwnerSet.length} holders pushed! Writing data...`);
             writeToFile(newOwnerSet);
-        };
+            };
     }
     catch(error) {
         console.error(error);
     }
 };
 
+function delayedForEach(array, callback, delay) {
+    let i = 0;
+    let intervalId = setInterval(function() {
+        callback(array[i++]);
+        if (i >= array.length) {
+            clearInterval(intervalId);
+        }
+    }, delay);
+};
+
 async function snapshot() {
-    await ownersJSON.owners.forEach(pushBalance);
+    // await ownersJSON.owners.forEach(pushBalance);
+    delayedForEach(ownersJSON.owners, pushBalance, DELAY);
     console.log(`🌀 ${ownersJSON.owners.length} holders data requested.`);
 };
 
