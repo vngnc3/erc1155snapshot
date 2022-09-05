@@ -4,12 +4,12 @@
 ---  
 
 📤 Exports as JSON object and CSV file.  
-⌚ This tool is unable to snapshot a previous block, due to the limitations in Alchemy's NFT API.  
+⌚ This tool is unable to snapshot a previous block, due to the limitations in Alchemy's NFT API, and possible reliability issues.    
 🔰 &nbsp;Use at your own risk, always verify, do your own research.  
 
 ---
 
-⚡ This tool uses two Alchemy Ethereum APIs:
+⚡ This tool uses two Alchemy APIs:
 - https://eth-mainnet.g.alchemy.com/v2/
 - https://eth-mainnet.alchemyapi.io/nft/v2/  
 

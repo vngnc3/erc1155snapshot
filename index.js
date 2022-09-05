@@ -4,8 +4,9 @@
 /// ██ Usage: Define Alchemy API key in .env file                █
 /// ██        Set file output, contract address, and tokenID.    █
 
-/// ██ This tool is unable to snapshot a previous block, due to  █
-/// ██ limitations in Alchemy's NFT API. Use at your own risk.   █
+/// ██ This tool is unable to snapshot a historical block, due   █
+/// ██ to limitations in Alchemy's NFT API, and possible reli-   █
+/// ██ ability issues. Use at your own risk.                     █
 
 /// ███████████████████████████████████████████████████████████████████
 
@@ -29,9 +30,9 @@ const ALCHEMY_KEY = process.env.ALCHEMY_KEY;
 // Define output filename
 const FILE_OUTPUT = 'snap';
 // Accepts ERC-1155 contract
-const CONTRACT_ADDRESS = '0x7b426a60ce72643fdf11556ee1d0da3c0a041ed8';
+const CONTRACT_ADDRESS = '0x6a46B8591679f53AE1AEd3Bae673F4D2208f7177';
 // Select the tokenID
-const TOKEN_ID = 2;
+const TOKEN_ID = 1;
 // Set the delay between requests in ms.
 const DELAY = 360;
 
@@ -67,7 +68,6 @@ const web3 = createAlchemyWeb3(
 
 
 /// ███ Set defaultBlock for this instance █████████████████████████
-// Block height currently set to default. Alchemy NFT API ignores web3.eth.defaultBlock parameter.
 const BLOCK_NUMBER = 'latest';         
 web3.eth.defaultBlock = BLOCK_NUMBER;
 
