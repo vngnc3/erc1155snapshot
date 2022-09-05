@@ -38,7 +38,7 @@ const DELAY = 360;
 
 
 /// ███ Write and verify function ███████████████████████████████████
-let csv = `address,balanceOf ${TOKEN_ID}`;
+let csv = `(address,balanceOf ${TOKEN_ID})`;
 async function writeToFile(pushedOwnerData) {
     const fileName = FILE_OUTPUT;
     const output = `${fileName}_${CONTRACT_ADDRESS.slice(0, 8)}_at_${currentBlock}`;
