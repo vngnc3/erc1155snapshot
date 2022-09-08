@@ -28,7 +28,7 @@ import fs from 'fs';
 // Read key from .env file
 const ALCHEMY_KEY = process.env.ALCHEMY_KEY;
 // Define output filename
-const FILE_OUTPUT = 'snap';
+const FILE_OUTPUT = 'snapshot';
 // Accepts ERC-1155 contract
 const CONTRACT_ADDRESS = '0x6a46B8591679f53AE1AEd3Bae673F4D2208f7177';
 // Select the tokenID

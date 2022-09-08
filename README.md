@@ -3,15 +3,17 @@
 
 ---  
 
+✨ A more recent tool is available under [vngnc3/ercsnapshot](https://github.com/vngnc3/ercsnapshot), capable of snapshotting previous block for ERC-721 collection.
+
+---   
+
 📤 Exports as JSON object and CSV file.  
-⌚ This tool is unable to snapshot a previous block, due to the limitations in Alchemy's NFT API, and possible reliability issues.    
+
+⌚ This tool is unable to snapshot a previous block, due to the limitations in alchemy-web3 library, and reliability issues in Alchemy NFT API.    
+
+⚡ This tool is due for an upgrade when Alchemy NFT API reliability issues have been resolved. The `getOwnersForContract()` endpoint will sometime return incorrect token balances. Hence, the use of slower `getNfts()` endpoint for more accurate result.  
+
 🔰 &nbsp;Use at your own risk, always verify, do your own research.  
-
----
-
-⚡ This tool uses two Alchemy APIs:
-- https://eth-mainnet.g.alchemy.com/v2/
-- https://eth-mainnet.alchemyapi.io/nft/v2/  
 
 🔼 Get your Alchemy API key on https://www.alchemy.com/  
 
@@ -19,10 +21,10 @@
 
 ## Requirements  
 
-- Node.JS
-- Alchemy API access  
+- Node.js
+- Alchemy API key  
 
-*This tool was created with Node 18.1.0, and it may or may not work with previous or newer versions of Node.* 
+*This tool was created with Node 18.1.0, and have not been tested with other versions of Node.* 
 
 
 ---  
@@ -44,7 +46,5 @@
 ## Maintenance
 
 I created this tool to enhance the experience I'm creating with my NFT collections. Specifically the ever-ongoing [Incomplete Design](https://id.xxxxizzy.eth.limo/) and the experiments I'm doing around it.   
-
-In the future, it would be nice if this tool has the option to snapshot from a previous block, but I have not found a convenient way to do so as of now.  
 
 Hit me up on Twitter [@vngnc](https://twitter.com/vngnc) for anything you have in mind about this code (or everything else). 🖤
